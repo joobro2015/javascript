@@ -242,3 +242,4 @@ let ar = list.map((n)=>{return `<span>${n.title}</span>`});
 // ----------------------------------
 // let x = 30;
 // console.log(x);
+
