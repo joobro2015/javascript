@@ -4,10 +4,10 @@ class boy{
 
         this.x = x || 100;
         this.y = y || 100;
-        this.sw = 106;
-        this.sh = 148.25;
-        this.ix = 1;
-        this.iy = 2;       
+        this.sw = 128;
+        this.sh = 163;
+        this.ix = 0;
+        this.iy = 0;       
         
         this.dx = 0;
         this.dy = 0;
@@ -16,7 +16,7 @@ class boy{
 
         this.cnt = 0;
         
-        this.img = document.querySelector("#boy");
+        this.img = document.querySelector("#man");
 
 
     }
@@ -31,21 +31,22 @@ class boy{
 
     update(){
         if(this.vx === 0 && this.vy ===0){
-
-            this.ix = 1;
+            this.ix = 3;
+            this.iy = 2;
             return;
         }
         if(this.cnt > 10){
 
-            if(this.ix ===1){
-                this. ix = 0 ;
+            if(this.ix ===3 && this.iy ===2){
+                this. ix =0;
+                this.iy=0;
             }
             else
                 this.ix = this.ix === 0 ? 2 : 0;
                 this.cnt = 0;
         }
         
-        this. cnt++;
+        this.cnt++;
 
         if((this.dx-0.5<=this.x && this.x <= this.dx+0.5)|| (this.dy-0.5<= this.y && this.y <= this.dy+0.5)){
         this.vx = 0;
