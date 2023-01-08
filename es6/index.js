@@ -108,7 +108,7 @@ map.set("id", 1);
 map.set("title", "map이란?");
 
 console.log("for each=================")
-map.forEach(function(v, k){
+map.forEach(function(k, v){
     console.log(`key:${k}, value:${v}`);
 });
 console.log("/forEach===================")
