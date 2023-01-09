@@ -1,14 +1,21 @@
-class GameCanvas {
+import boy from '../item/boy.js';
+import Background from '../item/back-ground.js';
+import enemy from '../item/enemy.js';
+
+export default class GameCanvas {
 
     constructor() {
         this.dom = document.querySelector(".game-canvas"); // 선택자 . : 뒤 이름의 class 를찾음
         this.boy = new boy(100, 100);
+        this.enemy = new enemy();
         this.bg = new Background();
         /** @type {CanvasRenderingContext2D} */
         this.ctx = this.dom.getContext("2d");
         this.dom.onclick = this.clickHandler.bind(this); //콜백함수
         this.dom.focus();
-
+        this.boy.speed++;
+        // this.boy.setSpeed(this.boy.getSpeed()+1);
+        console.log("speed:"+this.boy.speed)
         //게임 상태변수
         this.gameover = false;
         this.pause = false;
@@ -34,11 +41,13 @@ class GameCanvas {
 
     update() {
         this.boy.update();
+        this.enemy.update();
     }
 
     draw() {
         this.bg.draw(this.ctx);
         this.boy.draw(this.ctx);
+        this.enemy.draw(this.ctx);
     }
 
     pause() {
@@ -88,3 +97,6 @@ class GameCanvas {
         }
     }
 }
+
+
+// export default GameCanvas;
