@@ -1,102 +1,117 @@
-import boy from '../item/boy.js';
+import Boy from '../item/boy.js';
 import Background from '../item/back-ground.js';
-import enemy from '../item/enemy.js';
+import Enemy from '../item/enemy.js';
 
-export default class GameCanvas {
+export default class GameCanvas{
 
-    constructor() {
+    constructor(){
         this.dom = document.querySelector(".game-canvas"); // 선택자 . : 뒤 이름의 class 를찾음
-        this.boy = new boy(100, 100);
-        this.enemy = new enemy();
-        this.bg = new Background();
-        /** @type {CanvasRenderingContext2D} */
-        this.ctx = this.dom.getContext("2d");
-        this.dom.onclick = this.clickHandler.bind(this); //콜백함수
+        this.boy = new Boy(100,100);
         this.dom.focus();
+        this.bg = new Background();
+        this.enemies = [];
+        
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+          }
+        this.enemydelay = getRandomInt(30, 60);
+
+            
+          /** @type {CanvasRenderingContext2D} */
+        this.ctx = this.dom.getContext("2d");
         this.boy.speed++;
-        // this.boy.setSpeed(this.boy.getSpeed()+1);
-        console.log("speed:"+this.boy.speed)
+        this.dom.onclick = this.clickHandler.bind(this); //콜백함수
+        this.dom.onkeydown = this.keyDownHandler.bind(this);
+        this.dom.onkeyup = this.keyUpHandler.bind(this);
+        
         //게임 상태변수
         this.gameover = false;
         this.pause = false;
-        this.dom.onkeydown = this.keyDownHandler.bind(this)
-        this.dom.onkeyup = this.keyUpHandler.bind(this)
-
+        
+        
     }
 
-
-    run() {
-        if (this.pause)
+    
+    run(){
+        if(this.pause)
             return;
 
         // 초당 60프레임 화면을 다시 그리는 코드
         this.update(); //지웠다가 ()
         this.draw(); //다시 그리기
-
+        
         console.log("timer start");
-        window.setTimeout(() => { this.run(); }, 17);
+        window.setTimeout(()=>{this.run();},17);
+        if(this.delay<60){
+            this.delay 
+        }
 
-
+        //window.setTimeout(this.run.bind(this), 1000)
+    //     window.setTimeout(function(){
+    //         this.run();
+    //     })
+        
     }
 
-    update() {
+    update(){
         this.boy.update();
-        this.enemy.update();
-    }
+        for(let enemy of this.enemies)
+            enemy.update();
+            
+            this.enemydelay--;
+            if(this.enemydelay ==0){
+            function getRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+              }
+            let x = getRandomInt(-50,this.dom.width+50); // -50~ this.dom.width+50
+            let y = -50;
 
-    draw() {
+            let enemy = new Enemy(x,y);
+            enemy.onOutOfScreen = this.enemyOutOfScreenHandler.bind(this);
+            
+            this.enemies.push(enemy);
+            this.enemydelay = 60;
+            }
+            // 
+    }
+       
+    enemyOutOfScreenHandler(en){
+        let index = this.enemies.indexOf(en);
+        this.enemies.splice(index,1);
+        };
+    draw(){
         this.bg.draw(this.ctx);
+        for(let enemy of this.enemies)
+            enemy.draw(this.ctx)
         this.boy.draw(this.ctx);
-        this.enemy.draw(this.ctx);
     }
 
-    pause() {
+    pause(){
         this.pause = true;
     }
 
     // ----- event -----
-
-    clickHandler(e) {
-
+    
+    clickHandler(e){
+        
         this.boy.moveTo(e.x, e.y);
         // this.boy.move(2);
         // this.boy.draw(this.ctx);   
     }
 
-    keyDownHandler(e) {
-        switch (e.key) {
-            case "ArrowUp":
-                this.boy.move(1)
-                break;
-            case "ArrowDown":
-                this.boy.move(3)
-                break;
-            case "ArrowRight":
-                this.boy.move(2)
-                break;
-            case "ArrowLeft":
-                this.boy.move(4)
-                break;
-        }
+    keyDownHandler(e){
+        this.boy.move(e.key);        
     }
-    keyUpHandler(e) {
-        console.log(e.key);
-        switch(e.key) {
-            case "ArrowUp":
-                this.boy.stop(1);
-                break;
-            case "ArrowDown":
-                this.boy.stop(3);
-                break;
-            case "ArrowRight":
-                this.boy.stop(2);
-                break;
-            case "ArrowLeft":
-                this.boy.stop(4);
-                break;
-        }
+
+    keyUpHandler(e){
+        // this.boy.kreset();
+        this.boy.stop(e.key);
+            
     }
 }
-
 
 // export default GameCanvas;
