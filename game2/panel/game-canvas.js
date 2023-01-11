@@ -1,6 +1,8 @@
 import Boy from '../item/boy.js';
 import Background from '../item/back-ground.js';
 import Enemy from '../item/enemy.js';
+import newlec from '../newlec.js';
+
 
 export default class GameCanvas{
 
@@ -29,8 +31,8 @@ export default class GameCanvas{
         //게임 상태변수
         this.gameover = false;
         this.pause = false;
-        
-        
+          newlec.enemies = this.enemies;
+
     }
 
     
