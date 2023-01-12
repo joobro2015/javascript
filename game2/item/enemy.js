@@ -1,11 +1,16 @@
 export default class enemy {
+    #enemycx;
+    #enemeycy;
     constructor(x=0,y=0){
         this.x = x;
         this.y = y;
         
         this.speed = 2;
         this.onOutOfScreen = null;
-        
+        this.ischungdol = false;
+
+        this.cx = this.x;
+        this.cy = this.y;
         
         
         this.img = document.querySelector("#enemy");
@@ -18,12 +23,22 @@ export default class enemy {
         this.esw = this.explosion.width/4;
         this.esh = this.explosion.height/5;
 
+
     }
 
-
-
+    
     get width(){
         return this.img.width
+    }
+    get enemycx(){
+        return this.x + this.img.width/2
+    }
+    get enemycy(){
+        return this.y + this.img.height/2
+    }
+
+    chungdol(){
+        this.ischungdol = true;
     }
     
     update() {
@@ -32,27 +47,31 @@ export default class enemy {
         if(this.y > 500)
             if(this.onOutOfScreen != null)
                 this.onOutOfScreen(this);
-        
-}
+    
+    }
 
     draw(ctx) {
-        ctx.drawImage(this.img, this.x-this.img.width/2
-        , this.y-this.img.height/2);
+        ctx.drawImage(this.img, 
+                        this.x-this.img.width/2,
+                        this.y-this.img.height/2);
         
-        this.esx = this.esw*this.eix;
-        this.esy = this.esh*this.eiy;
+        if(this.ischungdol===true){
+            this.esx = this.esw*this.eix;
+            this.esy = this.esh*this.eiy;
+            ctx.drawImage(this.explosion,
+                this.esx,this.esy,this.esw,this.esh,
+                this.x-this.esw/2,this.y-this.esh+58, this.esw, this.esh);
+            }
 
-        ctx.drawImage(this.explosion,
-            this.esx,this.esy,this.esw,this.esh,
-            this.x-this.esw/2,this.y-this.esh+58, this.esw, this.esh);
-            
+
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.img.width/2, 0, 2 * Math.PI);
             ctx.stroke(); 
-            
+       
 
     }
 }
+
 
 
 

@@ -41,18 +41,14 @@ export default class Boy{
     }
 
     draw(ctx){
-        // let img = new Image();
-        // img.src = "boy.png";
-        // img.onload = function(){
-        //     console.log(this);
-            
-        // }.bind(this);
         this.sx = this.sw*this.ix;
         this.sy = this.sh*this.iy;
+
         ctx.drawImage(this.img,
             this.sx,this.sy,this.sw,this.sh,
             this.x-this.sw/2,this.y-this.sh+15, this.sw, this.sh);
             ctx.beginPath();
+
         ctx.arc(this.x, this.y, this.sw/2, 0, 2 * Math.PI);
         ctx.stroke(); 
     }
@@ -64,18 +60,22 @@ export default class Boy{
             let y = this.y ;
             
             
-            let ex = enemy.cx;
-            let ey = enemy.cy;
+            let ex = enemy.enemycx;
+            let ey = enemy.enemycy;
 
 
             let d = Math.sqrt((ex-x)*(ex-x)+(ey-y)*(ey-y));
-            let r1r2 = enemy.width/2 + this.sw/2
+            let r1r2 = enemy.width/2 + this.sw/2;
 
             if(d <= r1r2){
-                console.log("충돌발생!")
-            }
+                enemy.chungdol();
+                console.log("충돌발생!");
+                // 위임 받아 놓은 함수(callback 함수)를 호출한다.
+                if(this.onNoLife)
+                this.onNoLife();
+            } 
         }
-        console.log(newlec.enemies.length)
+        // console.log(newlec.enemies.length)
         if(this.moveUp)                   
             this.y -= this.#speed;
         if(this.moveDown)
