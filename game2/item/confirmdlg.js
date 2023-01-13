@@ -9,6 +9,7 @@ export default class confirmdlg {
         this.btnYes = {
             x: 70,
             y: 100,
+            
             width: 100,
             height: 50,
             label: 'Yes'

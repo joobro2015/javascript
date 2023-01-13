@@ -71,6 +71,7 @@ export default class Boy{
             if(d <= r1r2){
                 enemy.chungdol();
                 console.log("충돌발생!");
+                
                 // 위임 받아 놓은 함수(callback 함수)를 호출한다.
                 if(this.onNoLife && !this.noLife){
                 this.onNoLife();
