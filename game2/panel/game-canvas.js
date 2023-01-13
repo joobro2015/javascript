@@ -16,8 +16,6 @@ export default class GameCanvas{
         this.bg = new Background();
         this.enemies = [];
 
-        this.dlg = new confirmdlg();
-        this.dlg.show();
         
         function getRandomInt(min, max) {
             min = Math.ceil(min);
@@ -25,11 +23,19 @@ export default class GameCanvas{
             return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
         }
         this.enemydelay = getRandomInt(30, 60);
-
+        
         
         /** @type {CanvasRenderingContext2D} */
         this.ctx = this.dom.getContext("2d");
         this.boy.speed++;
+        
+        
+        this.dlg = new confirmdlg();
+        this.dlg.onclick = this.dlgclickHandler.bind(this); //콜백함수
+
+
+
+        // 내가 처리할 이벤트
         this.dom.onclick = this.clickHandler.bind(this); //콜백함수
         this.dom.onkeydown = this.keyDownHandler.bind(this);
         this.dom.onkeyup = this.keyUpHandler.bind(this);
@@ -37,6 +43,9 @@ export default class GameCanvas{
         //게임 상태변수
         this.gameover = false;
         this.pause = false;
+
+        // 내가 정의한 이벤트
+        this.dom.ongameover = null;
         newlec.enemies = this.enemies;
         
     }
@@ -99,7 +108,7 @@ export default class GameCanvas{
             enemy.draw(this.ctx)
         this.boy.draw(this.ctx);
         this.dlg.draw(this.ctx);
-        this.dlg.onclick = () =>{console.log("clicked")};
+        
 
     }
 
@@ -122,20 +131,25 @@ export default class GameCanvas{
 
         
     }
+    dlgclickHandler(id){
+        // 사용자가 더 이상 게임을 이어갈 의사가 없다고 함.
+        if(this.ongameover) //app이 게임이 끝나면 할 일이 있다고 했나?
+        this.ongameover(); //app에게 canvas가 끝났음을 알림
+
+    }
 
     keyDownHandler(e){
         this.boy.move(e.key);        
     }
 
     keyUpHandler(e){
-        // this.boy.kreset();
         this.boy.stop(e.key);
             
     }
 
     boyNoLifeHandler(){
         console.log("소년의 생명이 없습니다.")
-
+            this.dlg.show()
     }
 
 }

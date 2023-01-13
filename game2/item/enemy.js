@@ -5,7 +5,7 @@ export default class enemy {
         this.x = x;
         this.y = y;
         
-        this.speed = 2;
+        this.speed = 5;
         this.onOutOfScreen = null;
         this.ischungdol = false;
 

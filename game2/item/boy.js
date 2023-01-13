@@ -18,7 +18,8 @@ export default class Boy{
         this.vx = 0;
         this.vy = 0;
 
-        this.#speed = 3;
+        this.#speed = 15;
+        this.noLife = false;
 
         this.walkDelay = 0;
 
@@ -71,8 +72,10 @@ export default class Boy{
                 enemy.chungdol();
                 console.log("충돌발생!");
                 // 위임 받아 놓은 함수(callback 함수)를 호출한다.
-                if(this.onNoLife)
+                if(this.onNoLife && !this.noLife){
                 this.onNoLife();
+                this.noLife = true;
+                }
             } 
         }
         // console.log(newlec.enemies.length)
