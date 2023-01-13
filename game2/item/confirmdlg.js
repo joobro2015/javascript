@@ -39,6 +39,8 @@ export default class confirmdlg{
         ctx.fillRect(x+70, y+100, 100, 50);
         ctx.fillStyle = 'black';
         ctx.strokeRect(x+70, y+100, 100, 50);
+
+
         ctx.fillStyle = 'gray';
         ctx.fillRect(x+230, y+100, 100, 50);
         ctx.fillStyle = 'black';

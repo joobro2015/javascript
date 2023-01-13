@@ -23,6 +23,7 @@ export default class enemy {
         this.esw = this.explosion.width/4;
         this.esh = this.explosion.height/5;
 
+        this.expOrder = 0;
 
     }
 
@@ -42,7 +43,15 @@ export default class enemy {
     }
     
     update() {
+
+        this.eiy = Math.floor(this.expOrder / 4);
+        this.eix = this.expOrder % 4;
+
         this.y += this.speed;
+
+        if(this.ischungdol && this.expOrder ===18 && this.onOutOfScreen != null)
+            this.onOutOfScreen(this);
+
 
         if(this.y > 500)
             if(this.onOutOfScreen != null)
@@ -51,17 +60,19 @@ export default class enemy {
     }
 
     draw(ctx) {
+        this.esx = this.esw*this.eix;
+        this.esy = this.esh*this.eiy;
+
         ctx.drawImage(this.img, 
                         this.x-this.img.width/2,
                         this.y-this.img.height/2);
         
         if(this.ischungdol===true){
-            this.esx = this.esw*this.eix;
-            this.esy = this.esh*this.eiy;
             ctx.drawImage(this.explosion,
                 this.esx,this.esy,this.esw,this.esh,
                 this.x-this.esw/2,this.y-this.esh+58, this.esw, this.esh);
-            }
+            this.expOrder++;
+        }
 
 
             ctx.beginPath();

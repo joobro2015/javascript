@@ -99,6 +99,7 @@ export default class GameCanvas{
             enemy.draw(this.ctx)
         this.boy.draw(this.ctx);
         this.dlg.draw(this.ctx);
+        this.dlg.onclick = () =>{console.log("clicked")};
 
     }
 
@@ -110,9 +111,16 @@ export default class GameCanvas{
     
     clickHandler(e){
         
+        // this.boy.notifyClick(e.x,e.y);
+        // for(let enemy of this.enemies){
+        //     enemy.notifyClick??(e.x,e.y)
+        // }
+
+        if(this.dlg.notifyClick(e.x,e.y));
+        
         this.boy.moveTo(e.x, e.y);
-        // this.boy.move(2);
-        // this.boy.draw(this.ctx);   
+
+        
     }
 
     keyDownHandler(e){
