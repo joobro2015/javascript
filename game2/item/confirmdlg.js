@@ -40,6 +40,7 @@ export default class confirmdlg {
 
         // 내가 클릭된건가?
         if((this.x < x && x < this.x+this.width)&&(this.y < y && y<this.y+this.height)){
+            console.log(x,y)
             if(this.onclick){
                     console.log("나 클릭 됨")
                 }

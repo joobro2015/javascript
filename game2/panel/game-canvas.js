@@ -120,11 +120,6 @@ export default class GameCanvas{
     
     clickHandler(e){
         
-        // this.boy.notifyClick(e.x,e.y);
-        // for(let enemy of this.enemies){
-        //     enemy.notifyClick??(e.x,e.y)
-        // }
-
         if(this.dlg.notifyClick(e.x,e.y));
         
         this.boy.moveTo(e.x, e.y);
