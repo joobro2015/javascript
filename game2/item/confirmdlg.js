@@ -31,7 +31,8 @@ export default class confirmdlg {
     show() {
         this.isvisible = true;
     }
-
+    
+    
     // 윈도우로써 사용자 입력 이벤트를 수신하기 위한 함수
     notifyClick(x, y) {
         // 자식이 있다면 자식에게도 이 이벤트를 통지해야 한다.
@@ -39,12 +40,9 @@ export default class confirmdlg {
 
         // 내가 클릭된건가?
         if((this.x < x && x < this.x+this.width)&&(this.y < y && y<this.y+this.height)){
-                console.log("ㅇ?")
-
-
-                if(this.onclick)
-                    this.onclick(3); //1을  받으면 DLG, 2는YEs 3은 NO
-
+            if(this.onclick){
+                    console.log("나 클릭 됨")
+                }
             }
         // 내가 클릭되면 내 자식들 중에 클릭된 것이 있나?
 
